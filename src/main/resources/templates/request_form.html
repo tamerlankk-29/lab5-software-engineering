@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Добавить заявку</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+</head>
+<body>
+<nav class="nav">
+    <a th:href="@{/requests}">Все Заявки</a>
+    <a th:href="@{/requests(handled=false)}">Новые Заявки</a>
+    <a th:href="@{/requests(handled=true)}">Обработанные заявки</a>
+    <a class="primary" th:href="@{/requests/new}">+ Добавить заявку</a>
+</nav>
+<div class="container">
+    <h2>Добавить заявку</h2>
+    <form method="post" th:action="@{/requests}">
+        <label>ФИО</label>
+        <input type="text" name="userName" required>
+
+        <label>Курс</label>
+        <select name="courseId" required>
+            <option th:each="c : ${courses}" th:value="${c.id}" th:text="${c.name + ' - ' + c.price + ' USD'}"></option>
+        </select>
+
+        <label>Телефон</label>
+        <input type="text" name="phone" required>
+
+        <label>Комментарии</label>
+        <textarea name="commentary" rows="5"></textarea>
+
+        <button class="btn primary" type="submit">Добавить заявку</button>
+    </form>
+</div>
+</body>
+</html>

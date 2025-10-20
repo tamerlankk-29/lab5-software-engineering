@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Заявка</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+    <script th:src="@{/js/modal.js}" defer></script>
+</head>
+<body>
+<nav class="nav">
+    <a th:href="@{/requests}">Все Заявки</a>
+    <a th:href="@{/requests(handled=false)}">Новые Заявки</a>
+    <a th:href="@{/requests(handled=true)}">Обработанные заявки</a>
+    <a class="primary" th:href="@{/requests/new}">+ Добавить заявку</a>
+</nav>
+<div class="container">
+    <h2 th:text="'Заявка #' + ${req.id}"></h2>
+
+    <div class="form-readonly">
+        <label>ФИО</label>
+        <input type="text" th:value="${req.userName}" disabled>
+
+        <label>Курс</label>
+        <select disabled>
+            <option th:each="c : ${courses}"
+                    th:selected="${c.id} == ${req.course.id}"
+                    th:text="${c.name + ' - ' + c.price + ' USD'}"></option>
+        </select>
+
+        <label>Телефон</label>
+        <input type="text" th:value="${req.phone}" disabled>
+
+        <label>Комментарии</label>
+        <textarea rows="4" th:text="${req.commentary}" disabled></textarea>
+
+        <div class="actions">
+            <form th:action="@{'/requests/' + ${req.id} + '/delete'}" method="post" style="display:inline-block">
+                <button class="btn danger" type="submit">Удалить заявку</button>
+            </form>
+            <button class="btn" th:if="${!req.handled}" id="openAssign">Обработать заявку</button>
+            <span class="badge" th:classappend="${req.handled} ? 'green' : 'red'" th:text="${req.handled} ? 'Обработана' : 'Новая'"></span>
+        </div>
+    </div>
+
+    <h3>Назначенные операторы</h3>
+    <table class="table">
+        <thead><tr><th>Удалить</th><th>Имя</th><th>Фамилия</th><th>Департамент</th></tr></thead>
+        <tbody>
+        <tr th:each="op : ${req.operators}">
+            <td>
+                <form th:action="@{'/requests/' + ${req.id} + '/operators/' + ${op.id} + '/remove'}" method="post">
+                    <button class="btn small danger" type="submit">x</button>
+                </form>
+            </td>
+            <td th:text="${op.name}"></td>
+            <td th:text="${op.surname}"></td>
+            <td th:text="${op.department}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="modal" id="assignModal" th:if="${availableOperators != null}">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Выберите оператора</h3>
+            <span id="closeAssign" class="close">×</span>
+        </div>
+        <form th:action="@{'/requests/' + ${req.id} + '/assign'}" method="post">
+            <table class="table">
+                <thead><tr><th>Выбрать</th><th>Имя</th><th>Фамилия</th><th>Департамент</th></tr></thead>
+                <tbody>
+                <tr th:each="op : ${availableOperators}">
+                    <td><input type="checkbox" name="operatorIds" th:value="${op.id}"></td>
+                    <td th:text="${op.name}"></td>
+                    <td th:text="${op.surname}"></td>
+                    <td th:text="${op.department}"></td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="actions right">
+                <button type="button" class="btn" id="cancelAssign">Отмена</button>
+                <button type="submit" class="btn primary">Назначить</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

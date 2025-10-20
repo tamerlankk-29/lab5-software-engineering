@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>CRM Система</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+</head>
+<body>
+<nav class="nav">
+    <a th:href="@{/requests}">Все Заявки</a>
+    <a th:href="@{/requests(handled=false)}">Новые Заявки</a>
+    <a th:href="@{/requests(handled=true)}">Обработанные заявки</a>
+    <a class="primary" th:href="@{/requests/new}">+ Добавить заявку</a>
+</nav>
+<div class="container">
+    <h2 th:text="${handled == null ? 'Все заявки' : (handled ? 'Обработанные заявки' : 'Новые заявки')}"></h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>ФИО</th>
+            <th>Курс</th>
+            <th>Телефон</th>
+            <th>Статус</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="r : ${requests}">
+            <td th:text="${r.id}"></td>
+            <td th:text="${r.userName}"></td>
+            <td th:text="${r.course.name}"></td>
+            <td th:text="${r.phone}"></td>
+            <td>
+                <span th:text="${r.handled} ? 'Обработана' : 'Новая'" th:classappend="${r.handled} ? 'badge green' : 'badge red'"></span>
+            </td>
+            <td><a th:href="@{'/requests/' + ${r.id}}">Открыть</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

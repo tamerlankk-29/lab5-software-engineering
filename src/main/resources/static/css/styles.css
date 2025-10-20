@@ -1,0 +1,26 @@
+body{font-family:Arial,Helvetica,sans-serif;background:#f5f7fa;margin:0}
+.nav{background:#1f7a67;color:#fff;padding:12px;display:flex;gap:16px}
+.nav a{color:#fff;text-decoration:none}
+.nav a.primary{background:#0ea5a0;padding:6px 10px;border-radius:6px}
+.container{max-width:900px;margin:24px auto;background:#fff;padding:24px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.table{width:100%;border-collapse:collapse}
+.table th,.table td{border-bottom:1px solid #e5e7eb;padding:8px;text-align:left}
+.btn{background:#e5e7eb;border:none;padding:8px 12px;border-radius:6px;cursor:pointer}
+.btn.primary{background:#22c55e;color:#fff}
+.btn.danger{background:#ef4444;color:#fff}
+.btn.small{padding:4px 8px}
+label{display:block;margin:10px 0 4px}
+input[type=text],select,textarea{width:100%;padding:8px;border:1px solid #d1d5db;border-radius:6px}
+.form-readonly input,.form-readonly textarea,.form-readonly select{background:#f9fafb}
+.actions{margin-top:12px;display:flex;gap:10px;align-items:center}
+.actions.right{justify-content:flex-end}
+.badge{padding:2px 8px;border-radius:20px;font-size:12px;color:#fff}
+.badge.green{background:#16a34a}
+.badge.red{background:#ef4444}
+/* Modal */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center}
+.modal.show{display:flex}
+.modal-content{background:#fff;width:700px;max-height:80vh;overflow:auto;border-radius:8px}
+.modal-header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid #eee}
+.modal .actions{padding:12px 16px}
+.close{cursor:pointer}
