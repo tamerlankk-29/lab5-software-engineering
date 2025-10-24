@@ -17,5 +17,5 @@ public class Operator {
 
     private String surname;
 
-    private String department; // IT, Praja, Marketing
+    private String department;
 }
